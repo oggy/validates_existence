@@ -16,7 +16,8 @@ module ActiveRecord
         configuration.update(attr_names.extract_options!)
 
         validates_each(attr_names,configuration) do |record, attr_name, value|
-          unless (assoc = reflect_on_association(attr_name)) && assoc.macro == :belongs_to
+          assoc_name = attr_name.to_s.sub(/_id/, '').to_sym
+          unless (assoc = reflect_on_association(assoc_name)) && assoc.macro == :belongs_to
             raise ArgumentError, "Cannot validate existence of :#{attr_name} because it is not a belongs_to association."
           end
           fk_value = record[assoc.primary_key_name]

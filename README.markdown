@@ -13,7 +13,7 @@ The default error message is "does not exist".
 
     class Person < ActiveRecord::Base
       belongs_to :address
-      validates_existence_of :address
+      validates_existence_of :address_id
     end
 
 Note that this validation performs a query to see if the record in question exists.
