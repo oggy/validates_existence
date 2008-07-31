@@ -20,7 +20,7 @@ module ActiveRecord
           unless (assoc = reflect_on_association(assoc_name)) && assoc.macro == :belongs_to
             raise ArgumentError, "Cannot validate existence of :#{attr_name} because it is not a belongs_to association."
           end
-          fk_value = record[assoc.primary_key_name]
+          fk_value = record.__send__(assoc.primary_key_name)
           unless fk_value.nil? && configuration[:allow_nil]
             if (foreign_type = assoc.options[:foreign_type]) # polymorphic
               foreign_type_value = record[assoc.options[:foreign_type]]
